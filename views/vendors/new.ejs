@@ -1,17 +1,26 @@
 
-<h2>Add a new dish to <%= vendorReturned.name %> 's menu!</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>new</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    
+    <h2>Add a new dish to <%= vendorReturned.name %> 's menu!</h2>
+    <form action="/vendors/<%= vendorReturned.id/new %>" method="POST">
+      <label for="name">Name: </label>
+      <input type="text" id="name" name="dishName">
 
-<form action="/vendors/<%= vendorReturned.id %>/new" method="POST">
-  <label for="name">Name: </label>
-  <input type="text" id="name" name="dishName">
-
-  <label for="quantity">Quantity: </label>
-  <input type="text" id="quantity" name="dishQuantity">
+      <label for="quantity">Quantity: </label>
+      <input type="text" id="quantity" name="dishQuantity">
 
 
-  <label for="price">Price: </label>
-  <input type="text" id="price" name="dishPrice">
+      <label for="price">Price: </label>
+      <input type="text" id="price" name="dishPrice">
 
 
-  <button type="submit">Add Dish</button>
-</form>
+      <button type="submit">Add Dish</button>
+    </form>    
+  </body>
+</html>

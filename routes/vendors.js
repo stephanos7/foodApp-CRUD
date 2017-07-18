@@ -2,6 +2,7 @@
 const express = require('express');
 //Now require the MODEL to be able to send and receive database data via our routes 
 const Vendor = require('../models/vendor');
+const Dish = require("../models/dish");
 //Finally, iniate and require EXPRESS' Router to make things happen!
 const router  = express.Router();
 
@@ -16,9 +17,19 @@ router.get("/", (req, res, next) => {
     })
 });
 
+router.get("/:id/new", (req, res, next) => {
+    const vendorId = req.params.id;
+    Vendor.findById(vendorId, (err, vendorReturned) => {
+        if(err){
+            return next(err);
+        }
+        res.render("vendors/new", {vendorReturned});
+    }); 
+});
+
 
 //CREATE NEW FORM
-router.get("/:id/", (req, res, next) => {
+router.get("/:id", (req, res, next) => {
     const vendorId = req.params.id;
         Vendor.findById(vendorId, (err, vendorReturned) => {
     if(err){
@@ -28,42 +39,40 @@ router.get("/:id/", (req, res, next) => {
     }); 
 });
 
-router.get("/:id/new", (req, res, next) => {
-    const vendorId = req.params.id;
-        Vendor.findById(vendorId, (err, vendorReturned) => {
-    if(err){
-        return next(err);
-    }
-    res.render("vendors/new", {vendorReturned});
-    }); 
-});
 
 //POST NEW DATA
-router.post("/:id/new", (req, res, next) => { 
+router.post("/vendors/vendor.id/new", (req, res, next) => { 
   let vendorId = req.params.id;
-  console.log(vendorId);
+  console.log('vendor post: ', vendorId);
+  res.redirect(`vendors/${vendor._id}`);
+//    const newDish = new Dish({
+//       dishName: req.body.dishName,
+//       dishQuantity: req.body.dishQuantity,
+//       dishPrice: req.body.dishPrice
+//     });
 
-  Vendor.findById(vendorId, (err, vendor) => {
-     
-      if (err){
-          throw err;
-      }
-       console.log("finding...", vendorId);
-    const newDish = new Dish({
-      dishName: req.body.dishName,
-      dishQuantity: req.body.dishQuantity,
-      dishPrice: req.body.dishPrice
-    });
 
-    vendor.menu.push(newDish);
+//     Vendor.findByIdAndUpdate({_id: vendorId},{$push:{menu: newDish}}, (err, vendor) => {
+//       if (err){
+//           console.log('error -> ', err)
+//           return next(err);
+//       } else {
+//         console.log("finding...", vendor);
+//         // res.render("index");
+        
 
-    vendor.save((err) => {
-        if(err){
-            throw err;
-        }
-      res.redirect("vendors/index");
-    });
-  });
+//     // vendor.menu.push(newDish);
+
+//       }
+  
+    // vendor.save((err) => {
+    //  if(err){return next (err)} else{
+    //      console.log("inside")
+    //         res.redirect("/");
+    //  }
+    
+    // });
+//   });
 });
 
 /*
