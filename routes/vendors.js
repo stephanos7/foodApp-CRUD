@@ -3,7 +3,20 @@ const Vendor  = require('../models/vendor');
 const Dish    = require("../models/dish");
 const router  = express.Router();
 
+//MIDDLEWARE TO ENSURE ALL FOLLOWING ROUTES ARE ACCESSIBLE ONLY BY SINGNED IN USERS
+router.use((req, res, next) => {
+  if (req.session.currentVendor) { next(); }
+  else { res.redirect("/vendor-login"); }
+});
+
+
 //GET INDEX
+router.get("/", (req, res, next) => {
+  res.render("vendors/dashnoard",
+    { username: req.session.currentVendor.email}
+  );
+});
+
 router.get("/", (req, res, next) => { 
 
     Vendor.find({}, (err, theVendorsRetrieved) => {

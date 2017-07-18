@@ -37,9 +37,9 @@
     <input type="text" name="capacity" placeholder="10">
     <br><br>
 
-    <% if (typeof(errorMessage) != "undefined") { %>
+      <% if (typeof(errorMessage) !== "undefined") { %>
         <div class="error-message"><%= errorMessage %></div>
-    <% } %>
+      <% } %>
     <button>Create account</button>
 
     <p class="account-message">

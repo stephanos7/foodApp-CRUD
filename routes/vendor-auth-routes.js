@@ -14,53 +14,102 @@ vendorAuthRoutes.get("/vendor-signup", (req, res, next) => {
 
 //POST SIGNUP INFO
 vendorAuthRoutes.post("/vendor-signup", (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  var email = req.body.email;
+  var password = req.body.password;
 
-//CHECK IF PASS & USERNAME ARE PROVIDED
-  if (username === "" || password === "") {
-    res.render("vendor-signup", { message: "You need to provide a username and password!:)" });
+//VALIDATE THAT REQUIRED INFO IS PROVIDED
+  if (email === "" || password === "") {
+    res.render("vendor-signup", {
+      errorMessage: "You need to provide a username and a password to sign up!:)"
+    });
     return;
   }
 
-//CHECK IF USERNAME ALREADY EXISTS
-  Vendor.findOne({ username }, "username", (err, vendor) => {
-    if (vendor !== null) {
-      res.render("vendor-signup", { message: "Username taken" });
+//CHECK IF THE USERNAME ALREADY EXISTS
+  Vendor.findOne({ "email": email }, "email", (err, user) => {
+    if (user !== null) {
+      res.render("vendor-signup", {
+        errorMessage: "The email account already exists!!"
+      });
       return;
     }
 
-//ENCRYPT PASSWORD
-    const salt     = bcrypt.genSaltSync(bcryptSalt);
-    const hashPass = bcrypt.hashSync(password, salt);
+//ENCRYPT THE PASSWORD USING BCRYPT
+    var salt     = bcrypt.genSaltSync(bcryptSalt);
+    var hashPass = bcrypt.hashSync(password, salt);
 
-    const newVendor = Vendor({
-      username: username,
+    var newVendor = Vendor({
+      email,
       password: hashPass
     });
 
-//SAVE USER
+//SAVE VENDOR IN THE DB
     newVendor.save((err) => {
+      //handle possible errors
       if (err) {
-        res.render("vendor-signup", { message: "Something went wrong!!!" });
+        res.render("vendor-signup", {
+          errorMessage: "Something went wrong when signing up..."
+        });
       } else {
-        res.redirect("/");
+        res.redirect("/vendor-login");
       }
     });
   });
 });
 
-//VENDOR LOGIN
+//TIME TO LOGIN!
+//RENDER LOGIN FORM
 vendorAuthRoutes.get("/vendor-login", (req, res, next) => {
   res.render("vendor-login");
 });
 
-vendorAuthRoutes.post("/vendor-login", passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/vendor-login",
-  failureFlash: true,
-  passReqToCallback: true
-}));
+//POST LOGIN INFO
+vendorAuthRoutes.post("/vendor-login", (req, res, next) => {
+  var email = req.body.email;
+  var password = req.body.password;
 
+//VALIDATE THAT REQUIRED INFO IS PROVIDED
+  if (email === "" || password === "") {
+    res.render("vendor-login", {
+      errorMessage: "You need to provide a valid username and password to log in!:)"
+    });
+    return;
+  }
+
+//CHECK WHTHER USERNAME EXISTS IN DB
+  Vendor.findOne({ "email": email },
+    "_id email password following",
+    (err, vendor) => {
+      if (err || !vendor) {
+        res.render("vendor-login", {
+          errorMessage: "The email doesn't exist!!"
+        });
+        return;
+      } else {
+        if (bcrypt.compareSync(password, vendor.password)) {
+          req.session.currentVendor = vendor;
+          res.redirect("/dashboard");
+          // logged in ADD THE VENDORS PRIVATE DASHBOARD!==============================<
+        } else {
+          res.render("vendor-login", {
+            errorMessage: "Incorrect password"
+          });
+        }
+      }
+  });
+});
+
+//LOGOUT
+vendorAuthRoutes.get("/logout", (req, res, next) => {
+  if (!req.session.currentVendor) { res.redirect("/"); return; }
+
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/vendor-login");
+    }
+  });
+});
 
 module.exports = vendorAuthRoutes;
