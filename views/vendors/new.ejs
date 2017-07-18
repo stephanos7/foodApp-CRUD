@@ -1,7 +1,7 @@
 
 <h2>Add a new dish to <%= vendorReturned.name %> 's menu!</h2>
 
-<form action="/vendors/new" method="POST">
+<form action="/vendors/<%= vendorReturned.id %>/new" method="POST">
   <label for="name">Name: </label>
   <input type="text" id="name" name="dishName">
 

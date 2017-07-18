@@ -37,14 +37,36 @@ router.get("/:id/new", (req, res, next) => {
     res.render("vendors/new", {vendorReturned});
     }); 
 });
-/*
+
 //POST NEW DATA
-router.post("/new", (req, res, next) => { 
-    const dishInfo = {
-    dishName : req.body.dishName,
-    dishQuantity : req.body.dishQuantity,
-    dishPrice : req.body.dishPrice,
-}
+router.post("/:id/new", (req, res, next) => { 
+  let vendorId = req.params.id;
+  console.log(vendorId);
+
+  Vendor.findById(vendorId, (err, vendor) => {
+     
+      if (err){
+          throw err;
+      }
+       console.log("finding...", vendorId);
+    const newDish = new Dish({
+      dishName: req.body.dishName,
+      dishQuantity: req.body.dishQuantity,
+      dishPrice: req.body.dishPrice
+    });
+
+    vendor.menu.push(newDish);
+
+    vendor.save((err) => {
+        if(err){
+            throw err;
+        }
+      res.redirect("vendors/index");
+    });
+  });
+});
+
+/*
 
     const newDish = new Dish(dishInfo);
         
