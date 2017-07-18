@@ -3,6 +3,10 @@ const Vendor  = require('../models/vendor');
 const Dish    = require("../models/dish");
 const router  = express.Router();
 
+const session        = require("express-session");
+const customerData   = require('connect-mongo') (session);
+const vendorData     = require('connect-mongo') (session);
+
 //MIDDLEWARE TO ENSURE ALL FOLLOWING ROUTES ARE ACCESSIBLE ONLY BY SINGNED IN USERS
 router.use((req, res, next) => {
   if (req.session.currentVendor) { next(); }
@@ -11,7 +15,7 @@ router.use((req, res, next) => {
 
 
 //GET INDEX
-router.get("/", (req, res, next) => {
+router.get("/dashboard", (req, res, next) => {
   res.render("vendors/dashnoard",
     { username: req.session.currentVendor.email}
   );

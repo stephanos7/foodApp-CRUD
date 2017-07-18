@@ -1,7 +1,9 @@
+
 const express            = require("express");
 const vendorAuthRoutes   = express.Router();
 const passport           = require("passport");
 const Vendor             = require("../models/vendor");
+
 // Bcrypt
 const bcrypt             = require("bcrypt");
 const bcryptSalt         = 10;
@@ -88,7 +90,8 @@ vendorAuthRoutes.post("/vendor-login", (req, res, next) => {
       } else {
         if (bcrypt.compareSync(password, vendor.password)) {
           req.session.currentVendor = vendor;
-          res.redirect("/dashboard");
+          console.log(req.session.currentVendor);
+          return res.redirect("/vendors");
           // logged in ADD THE VENDORS PRIVATE DASHBOARD!==============================<
         } else {
           res.render("vendor-login", {
