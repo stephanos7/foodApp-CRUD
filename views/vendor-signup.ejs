@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <title>Vendor Sign Up</title>
+</head>
+
+<body>
+  <form id="form" action="/vendor-signup" method="POST">
+      
+    <h2>Vendor Signup</h2>
+    <!-- username -->
+    <label for="email">E-mail</label><br>
+    <input type="text" name="email" placeholder="grandmas@food.com">
+    <br><br>
+    <!-- password -->
+    <label for="password">Password</label><br>
+    <input type="password" name="password" placeholder="grandma">
+    <br><br>
+    <!-- name -->
+    <label for="name">Name</label><br>
+    <input type="text" name="name" placeholder="atgrandmas">
+    <br><br>
+    <!-- postcode -->
+    <label for="postcode">Postcode</label><br>
+    <input type="text" name="postcode" placeholder="80817">
+    <br><br>
+    <!-- cuisine -->
+    <label for="cuisine">Cuisine</label><br>
+    <input type="text" name="cuisine" placeholder="greek">
+    <br><br>
+     <!-- capacity -->
+    <label for="capacity">Capacity</label><br>
+    <input type="text" name="capacity" placeholder="10">
+    <br><br>
+
+    <% if (typeof(errorMessage) != "undefined") { %>
+        <div class="error-message"><%= errorMessage %></div>
+    <% } %>
+    <button>Create account</button>
+
+    <p class="account-message">
+        Already have a vendor account? <a href="/vendor-login">Log in</a>
+    </p>
+  </form>
+</body>
+</html>

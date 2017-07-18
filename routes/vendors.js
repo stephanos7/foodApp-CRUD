@@ -1,9 +1,6 @@
-//As always, require EXPRESS!
 const express = require('express');
-//Now require the MODEL to be able to send and receive database data via our routes 
-const Vendor = require('../models/vendor');
-const Dish = require("../models/dish");
-//Finally, iniate and require EXPRESS' Router to make things happen!
+const Vendor  = require('../models/vendor');
+const Dish    = require("../models/dish");
 const router  = express.Router();
 
 //GET INDEX
@@ -46,6 +43,7 @@ router.post("/vendors/vendor.id/new", (req, res, next) => {
   let vendorId = req.params.id;
   console.log('vendor post: ', vendorId);
   res.redirect(`vendors/${vendor._id}`);
+
 //    const newDish = new Dish({
 //       dishName: req.body.dishName,
 //       dishQuantity: req.body.dishQuantity,

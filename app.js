@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/foodModelsDB");
 
@@ -13,6 +15,10 @@ var app = express();
 var index = require('./routes/index');
 var users = require('./routes/users');
 var vendors = require('./routes/vendors');
+const vendorAuthRoutes = require("./routes/vendor-auth-routes");
+const customerAuthRoutes = require("./routes/customer-auth-routes");
+
+
 
 
 // view engine setup
@@ -27,9 +33,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 app.use('/', index);
-// app.use('/users', users);
+app.use('/', vendorAuthRoutes);
+app.use('/', customerAuthRoutes);
 app.use('/vendors', vendors);
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
