@@ -28,19 +28,20 @@ router.get("/:id/new", (req, res, next) => {
 });
 
 
-//CREATE NEW FORM
+//GET THE NEW DISH FORM
 router.get("/:id", (req, res, next) => {
     const vendorId = req.params.id;
         Vendor.findById(vendorId, (err, vendorReturned) => {
     if(err){
         return next(err);
     }
+    //console.log(vendorReturned.menu);
     res.render("vendors/profile", {vendorReturned});
     }); 
 });
 
 
-//POST NEW DATA
+//POST NEW DISH TO BE INCLUDED IN THE MENU
 router.post("/vendors/vendor.id/new", (req, res, next) => { 
   let vendorId = req.params.id;
   console.log('vendor post: ', vendorId);
@@ -86,6 +87,8 @@ router.post("/vendors/vendor.id/new", (req, res, next) => {
         res.redirect("/");
         })
 });
+//GET MENUS
+
 
 
 //GO TO VENDOR PROFILE

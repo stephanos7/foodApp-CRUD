@@ -1,3 +1,11 @@
 <h2><%= vendorReturned.name %>'s profile</h2>
 
-        <a href="/vendors/<%= vendorReturned.id%>/new">New Dish</a>
+        <a href="/vendors/<%= vendorReturned.id%>/new">Add New Dish</a>
+
+<h3>Today's Menu:</h3>
+<ul><% vendorReturned.menu.forEach((element) => { %>
+    <li><a href="/vendors/<%= element.dishName %>"><%= element.dishName %> : $<%= element.dishPrice %></a>
+    <button>DELETE</button><button>EDIT</button>
+    <% }); %>
+    </li>
+</ul>
