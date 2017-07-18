@@ -19,7 +19,7 @@ mongoose.connect("mongodb://localhost/foodModelsDB");
 
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var customers = require('./routes/customers');
 var vendors = require('./routes/vendors');
 const vendorAuthRoutes = require("./routes/vendor-auth-routes");
 const customerAuthRoutes = require("./routes/customer-auth-routes");
@@ -58,13 +58,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 app.use('/', index);
 app.use('/', vendorAuthRoutes);
 app.use('/', customerAuthRoutes);
 app.use('/vendors', vendors);
-
-
+app.use('/customers', customers);
 
 
 

@@ -91,7 +91,7 @@ vendorAuthRoutes.post("/vendor-login", (req, res, next) => {
         if (bcrypt.compareSync(password, vendor.password)) {
           req.session.currentVendor = vendor;
           console.log(req.session.currentVendor);
-          return res.redirect("/vendors");
+          return res.redirect("vendors/dashboard");
           // logged in ADD THE VENDORS PRIVATE DASHBOARD!==============================<
         } else {
           res.render("vendor-login", {

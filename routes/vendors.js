@@ -1,6 +1,5 @@
 const express = require('express');
 const Vendor  = require('../models/vendor');
-const Dish    = require("../models/dish");
 const router  = express.Router();
 
 const session        = require("express-session");
@@ -16,7 +15,7 @@ router.use((req, res, next) => {
 
 //GET INDEX
 router.get("/dashboard", (req, res, next) => {
-  res.render("vendors/dashnoard",
+  res.render("vendors/dashboard",
     { username: req.session.currentVendor.email}
   );
 });

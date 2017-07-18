@@ -1,15 +1,30 @@
-<h2>CUSTOMER LOGIN</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <title>Customer Login</title>
+</head>
 
-<form action="/customer-login" method="POST">
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" name="username" placeholder="grandmas@food.com">
-  </div>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" name="password" placeholder="grandma">
-  </div>
-  <div>
-    <input type="submit" value="Log In">
-  </div>
+<body>
+<form id="form" action="/customer-login" method="POST" id="form">
+     
+    <h2>Customer Login</h2>
+    <label for="username">username</label>
+    <input type="text" name="username" placeholder="grandpas@food.com">
+    <br><br>
+    <label for="password">Password</label>
+    <input type="password" name="password" placeholder="grandpa">
+    <br><br>
+    <% if (typeof errorMessage !== "undefined") { %>
+        <div class="error-message"><%= errorMessage %></div>
+    <% } %>
+    <button>Log in</button>
+
+    <p class="account-message">
+        Don't have a vendor account? <a href="/customer-signup">Sign up</a>
+    </p>
 </form>
+</body>
