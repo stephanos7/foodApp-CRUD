@@ -1,0 +1,17 @@
+
+<h2>Add a new dish to <%= vendorReturned.name %> 's menu!</h2>
+
+<form action="/vendors/new" method="POST">
+  <label for="name">Name: </label>
+  <input type="text" id="name" name="dishName">
+
+  <label for="quantity">Quantity: </label>
+  <input type="text" id="quantity" name="dishQuantity">
+
+
+  <label for="price">Price: </label>
+  <input type="text" id="price" name="dishPrice">
+
+
+  <button type="submit">Add Dish</button>
+</form>

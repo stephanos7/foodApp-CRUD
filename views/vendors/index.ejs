@@ -1,0 +1,8 @@
+<h2>vendors index</h2>
+
+<h3>The list of our vendors:</h3>
+<ul><% theVendorsRetrieved.forEach((element) => { %>
+    <li><a href="/vendors/<%= element.id %>"><%= element.name %></a>
+    <% }); %>
+    </li>
+</ul>
