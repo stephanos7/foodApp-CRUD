@@ -1,5 +1,6 @@
 const express            = require("express");
 const customerAuthRoutes = express.Router();
+const passport           = require("passport");
 const Customer           = require("../models/customer");
 // Bcrypt
 const bcrypt             = require("bcrypt");
@@ -48,5 +49,17 @@ customerAuthRoutes.post("/customer-signup", (req, res, next) => {
     });
   });
 });
+
+//CUSTOMER LOGIN
+customerAuthRoutes.get("/customer-login", (req, res, next) => {
+  res.render("customer-login");
+});
+
+customerAuthRoutes.post("/customer-login", passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/customer-login",
+  failureFlash: true,
+  passReqToCallback: true
+}));
 
 module.exports = customerAuthRoutes;

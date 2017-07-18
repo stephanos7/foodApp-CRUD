@@ -1,5 +1,6 @@
 const express            = require("express");
 const vendorAuthRoutes   = express.Router();
+const passport           = require("passport");
 const Vendor             = require("../models/vendor");
 // Bcrypt
 const bcrypt             = require("bcrypt");
@@ -48,5 +49,18 @@ vendorAuthRoutes.post("/vendor-signup", (req, res, next) => {
     });
   });
 });
+
+//VENDOR LOGIN
+vendorAuthRoutes.get("/vendor-login", (req, res, next) => {
+  res.render("vendor-login");
+});
+
+vendorAuthRoutes.post("/vendor-login", passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/vendor-login",
+  failureFlash: true,
+  passReqToCallback: true
+}));
+
 
 module.exports = vendorAuthRoutes;
